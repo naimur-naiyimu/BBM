@@ -16,7 +16,9 @@ SECRET_KEY = 'django-insecure-@73s11+tvbqdpdf7bjxb(qj(ex6o^#fd@!djs4mns#nb=^htc9
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
+CSRF_TRUSTED_ORIGINS = [
+    'https://bbm-z506.onrender.com'
+]
 
 # Application definition
 
