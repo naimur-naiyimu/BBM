@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block title %}Pending request{% endblock %}
+
+{% block content %}
+
+
+    <!-- My Requests -->
+    <h1 class="display-4 section-heading form-gap mb-5 text-center">My Requests</h1>
+
+    <!-- Pending Requests -->
+    <section id="list">
+        <div class="container ">
+            <h3 class="my-4 red">Pending Requests ({{ approved_count }})</h3>
+            
+            <div class="row">
+                {% for request in requests %}
+                {% if request.status == 'approved' %}
+                    <div class="col-6 col-md-6 col-lg-4 my-2">
+                        <div class="card">
+                            <div class="card-body pb-4">
+                                <div class="row">
+                                    <div class="col-4 d-flex flex-column justify-content-center align-items-center">
+                                        <div class="blood-type text-center d-flex flex-column justify-content-center">
+                                            <p class="vertical-center">{{ request.blood_group }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-8">
+                                        <h5 class="mt-1 card-title name">For {{ request.patient_name }}
+                                            {% if request.gender == 'male' %}
+                                                <i class="ml-2 fas fa-male "></i>
+                                            {% elif request.gender == 'female' %}
+                                                <i class="ml-2 fas fa-female "></i>
+                                            {% endif %}
+                                        </h5>
+                                        <h6 class="card-subtitle mb-2 text-muted">
+                                            <i class="fas fa-map-marker-alt mr-2 mt-1"></i>
+                                            <span class="mt-1">{{ request.hospital }}</span>
+                                        </h6>
+                                        <p class="mt-3 card-text info">
+                                            <i class="fas fa-tint mr-2"></i>
+                                            <span>{{ request.units_required }} Pints</span><br>
+                                            <i class="fas fa-exclamation-circle mr-2"></i>
+                                            <span>{{ request.get_urgency_display }}</span><br>
+                                            <i class="fas fa-phone mr-2 mt-1"></i>
+                                            <span class="mt-1">{{ request.mobile }}</span><br>  
+                                            <i class="far fa-envelope mr-2 mt-1"></i>
+                                            <span class="mt-1">{{ request.requester.email }}</span><br>
+                                            <i class="fas fa-calendar-alt mr-2 mt-1"></i>
+                                            <span class="mt-1">{{ request.needed_by|date:"d M Y, H:i" }}</span>
+                                        </p>
+                                    </div>
+                                    <div class="col-4"></div>
+                                    <form method="post" action="{% url 'delete_blood_request' request.pk %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="mt-3 slant-edge">
+                                            <p>Delete Request</p>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {%endif%}
+                    {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Accepted Requests -->
+    <section id="list">
+        <div class="container ">
+            <h3 class="my-4 red">Accepted Requests ({{ pending_count}})</h3>
+            <div class="row">
+                {% for request in requests %}
+                {% if request.status == 'pending' %}
+                    <div class="col-6 col-md-6 col-lg-4 my-2">
+                        <div class="card">
+                            <div class="card-body pb-4">
+                                <div class="row">
+                                    <div class="col-4 d-flex flex-column justify-content-center align-items-center">
+                                        <div class="blood-type text-center d-flex flex-column justify-content-center">
+                                            <p class="vertical-center">{{ request.blood_group }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-8">
+                                        {% for donation in request.all_donations %}
+                                        {% if donation.status == 'pending' %}
+                                        <div class="approved-donor mt-2">
+                                            <p class="text-success">
+                                                <i class="fas fa-check-circle"></i>
+                                                Accepted by: <a href="{% url 'profile' %}?user_id={{ donation.donor.pk }}">{{ donation.donor.first_name }}</a>
+                                            </p>
+                                        </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                        <h5 class="mt-1 card-title name">For {{ request.patient_name }}
+                                            {% if request.gender == 'male' %}
+                                                <i class="ml-2 fas fa-male "></i>
+                                            {% elif request.gender == 'female' %}
+                                                <i class="ml-2 fas fa-female "></i>
+                                            {% endif %}
+                                        </h5>
+                                        <h6 class="card-subtitle mb-2 text-muted">
+                                            <i class="fas fa-map-marker-alt mr-2 mt-1"></i>
+                                            <span class="mt-1">{{ request.hospital }}</span>
+                                        </h6>
+                                        <p class="mt-3 card-text info">
+                                            <i class="fas fa-tint mr-2"></i>
+                                            <span>{{ request.units_required }} Pints</span><br>
+                                            <i class="fas fa-exclamation-circle mr-2"></i>
+                                            <span>{{ request.get_urgency_display }}</span><br>
+                                            <i class="fas fa-phone mr-2 mt-1"></i>
+                                            <span class="mt-1">{{ request.mobile }}</span><br>  
+                                            <i class="far fa-envelope mr-2 mt-1"></i>
+                                            <span class="mt-1">{{ request.requester.email }}</span><br>
+                                            <i class="fas fa-calendar-alt mr-2 mt-1"></i>
+                                            <span class="mt-1">{{ request.needed_by|date:"d M Y, H:i" }}</span>
+                                        </p>
+                                    </div>
+                                    {% comment %} <div class="col-4"></div>
+                                    <form method="post" action="{% url 'delete_blood_request' request.pk %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="mt-3 slant-edge">
+                                            <p>Delete Request</p>
+                                        </button>
+                                    </form> {% endcomment %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

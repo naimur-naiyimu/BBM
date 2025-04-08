@@ -1,0 +1,186 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Bleed To Save - Home{% endblock %}
+
+{% block content %}
+    <!-- Intro -->
+    
+    <section id="intro-slide">
+        <div class="container mt-2">
+            <h1 class="display-4 section-heading slide-heading mb-2 text-center">BLEED TO SAVE</h1>
+            <p class="slide-description text-center">Bleed To Save is intended to help people in the need of blood, find the required blood by connecting with donors online.</p>
+            {% if not user.is_authenticated %}
+            <div class="d-flex justify-content-center">
+                <a href="{% url 'register' %}" class="mr-1 btn btn-lg btn-primary slide-btn">Register</a>
+                <a href="{% url 'login' %}" class="ml-1 btn btn-lg btn-primary slide-btn">Login</a> 
+            </div>
+            {%else%} 
+            <div class="d-flex justify-content-center">
+                <a href="{% url 'blood-request-create' %}" class="mr-3 btn btn-lg btn-primary slide-btn">Create Blood Request</a>
+                <a href="{% url 'blood_request_list' %}" class="ml-3 btn btn-lg btn-primary slide-btn">My Requests list</a>
+                <a href="{% url 'donation_list' %}" class="ml-3 btn btn-lg btn-primary slide-btn">My Donations list</a> 
+            </div>
+            {% endif%}
+        </div>
+    </section>
+    
+
+    <section class="index-list">
+        <!-- Services -->
+        <section id="services" class="container">
+            <div class="row justify-content-around">
+                <div class="col-lg-1-5"></div>
+                <div class="col-lg-9">
+                    <div class="row">
+                        <div class=" col-md-4 my-2 my-md-0">
+                            <div class="card">
+                                <div class="mt-1 card-hover center">
+                                    <img src="{% static 'imgs/card1.png'%}" class="wow animate__animated animate__slideInLeft card-img" alt="...">
+                                </div>
+                                <div class="card-body">
+                                    <h4 class="card-title mt-1 content-heading">NEED BLOOD</h4>
+                                    <p class="card-text content">If you are in need of blood donor, then you have come to the right place. We can help you search for donors.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 my-2 my-md-0">
+                            <div class="card">
+                                <div class="mt-1 card-hover center">
+                                    <img src="{% static 'imgs/card2.png'%}" class="wow animate__animated animate__slideInUp card-img" alt="...">
+                                </div>
+                                <div class="card-body">
+                                    <h4 class="card-title mt-1 content-heading">FIND DONOR</h4>
+                                    <p class="card-text content">You can find blood donors in your area and can also place blood requests to find the required donor.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 mb-5 mb-md-0 mt-2 mt-md-0">
+                            <div class="card">
+                                <div class="mt-1 card-hover center">
+                                    <img src="{% static 'imgs/card3.png'%}" class="wow animate__animated animate__slideInRight card-img" alt="...">
+                                </div>
+                                <div class="card-body">
+                                    <h4 class="card-title mt-1 content-heading">SAVE LIFE</h4>
+                                    <p class="card-text content">You can help save someone's life by logging in as a donor and accepting their blood requests.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-1-5"></div>
+            </div>
+        </section>
+
+        <!-- Pending Requests -->
+        <section id="list" class="index-requests pb-5">
+            <h2 class="display-4 section-heading text-center mb-4 pt-5 pt-md-0">Blood Requests</h2>
+            <div class="container">
+                <h5 class="content text-center slide-description mb-5">You can help the people in search of a donor by accepting their request.</h5>
+                <div class="row">
+                    {% for request in blood_requests %}
+                    <div class="col-6 col-md-6 col-lg-4 my-2">
+                        <div class="card">
+                            <div class="card-body pb-4">
+                                <div class="row">
+                                    <div class="col-4 d-flex flex-column justify-content-center align-items-center">
+                                        <div class="blood-type text-center d-flex flex-column justify-content-center">
+                                            <p class="vertical-center">{{ request.blood_group }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-8">
+                                        <h5 class="mt-1 card-title name">For {{ request.patient_name }}
+                                            {% if request.gender == 'male' %}
+                                                <i class="ml-2 fas fa-male "></i>
+                                            {% elif request.gender == 'female' %}
+                                                <i class="ml-2 fas fa-female "></i>
+                                            {% endif %}
+                                        </h5>
+                                        <h6 class="card-subtitle mb-2 text-muted">
+                                            <i class="fas fa-map-marker-alt mr-2 mt-1"></i>
+                                            <span class="mt-1">{{ request.hospital }}</span>
+                                        </h6>
+                                        <p class="mt-3 card-text info">
+                                            <i class="fas fa-tint mr-2"></i>
+                                            <span>{{ request.units_required }} Pints</span><br>
+                                            <i class="fas fa-exclamation-circle mr-2"></i>
+                                            <span>{{ request.get_urgency_display }}</span><br>
+                                            <i class="fas fa-phone mr-2 mt-1"></i>
+                                            <span class="mt-1">{{ request.mobile }}</span><br>  
+                                            <i class="far fa-envelope mr-2 mt-1"></i>
+                                            <span class="mt-1">{{ request.requester.email }}</span><br>
+                                            <i class="fas fa-calendar-alt mr-2 mt-1"></i>
+                                            <span class="mt-1">{{ request.needed_by|date:"d M Y, H:i" }}</span>
+                                        </p>
+                                    </div>
+                                    <div class="col-4"></div>
+                                    <form method="post" action="{% url 'create_donation' request.id %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="mt-3 slant-edge">
+                                            <p>Accept Request</p>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    </section>
+
+    <!-- Counter -->
+    <section id="counter">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-1"></div>
+                <div class="animate__animated animate__slideInLeft wow col-12 col-lg-6 vertical-center">
+                    <h1 class="display-4 section-heading about-heading mb-2 left">ABOUT US</h1>
+                    <p class="about-description left">
+                        Bleed To Save intends to help people in need of blood find blood donors. 
+                        The recipients can search donors efficiently using area and blood type filters. 
+                        Many people have successfully found donors using this platform.
+                    </p>
+                </div>
+                <div class="col-lg-1"></div>
+                <div class="count-left-margin col-12 col-lg-4">
+                    <div class="row">
+                        <div class="col-12 col-sm-4 col-lg-12 mb-4">
+                            <div class="d-flex flex-row">
+                                <span class="wow animate__animated animate__zoomIn icon-calendar fs1 mr-3 mr-md-4 mt-3"></span>
+                                <div class="d-flex flex-column">
+                                    <h2 class="display-4 count"><span class="counter">{{ requests_count }}</span><span>+</span></h2>
+                                    <hr class="count-line mb-2">
+                                    <p class="counter-content">Years of Service</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-sm-4 col-lg-12 mb-4">
+                            <div class="d-flex flex-row">
+                                <span class="wow animate__animated animate__zoomIn icon-users fs1 mr-3 mr-md-4 mt-3"></span>
+                                <div class="d-flex flex-column">
+                                    <h2 class="display-4 count"><span class="counter">{{ user_count }}</span><span>+</span></h2>
+                                    <hr class="count-line mb-2">
+                                    <p class="counter-content">Registered Users</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-sm-4 col-lg-12">
+                            <div class="d-flex flex-row">
+                                <span class="wow animate__animated animate__zoomIn icon-trophy fs1 mr-3 mr-md-4 mt-3"></span>
+                                <div class="d-flex flex-column">
+                                    <h2 class="display-4 count"><span class="counter">{{ donations_count}}</span><span>+</span></h2>
+                                    <hr class="count-line mb-2">
+                                    <p class="counter-content">Successful Cases</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

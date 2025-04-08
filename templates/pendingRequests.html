@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Pending request{% endblock %}
+
+{% block content %}
+
+
+    <!-- Blood Requests -->
+    <h1 class="display-4 section-heading form-gap mb-4 text-center">accepting Requests</h1>
+    <section id="list" class="gap-bottom">
+        <div class="container ">
+            <p class="text-center slide-description mb-5 content grey">You can help the people in search of a donor by accepting their request. The requester will be notified when their request has been accepted.</p>
+            <div class="row">
+                {% for request in donations %}
+                <div class="col-12 col-md-6 col-lg-4 my-2 content">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <!-- Left Column (Blood Group and Status) -->
+                                <div class="col-4 d-flex flex-column justify-content-center align-items-center">
+                                    <div class="blood-type text-center d-flex flex-column justify-content-center">
+                                        <p class="vertical-center">{{ request.related_request.blood_group }}</p>
+                                    </div>
+                                </div>
+                                
+                                <!-- Right Column (Patient Info) -->
+                                <div class="col-8">
+                                    <h5 class="mt-1 card-title name">For {{ request.related_request.patient_name }}
+                                        {% if request.related_request.gender == 'male' %}
+                                            <i class="ml-2 fas fa-male "></i>
+                                        {% elif request.related_request.gender == 'female' %}
+                                            <i class="ml-2 fas fa-female "></i>
+                                        {% endif %}
+                                    </h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">
+                                        <i class="fas fa-map-marker-alt mr-2 mt-1"></i>
+                                        <span class="mt-1">{{ request.related_request.hospital }}</span>
+                                    </h6>
+                                    <p class="mt-3 card-text info">
+                                        <i class="fas fa-tint mr-2"></i>
+                                        <span>{{ request.related_request.units_required }} Pints</span><br>
+                                        <i class="fas fa-exclamation-circle mr-2"></i>
+                                        <span>{{ request.related_request.get_urgency_display }}</span><br>
+                                        <i class="fas fa-phone mr-2 mt-1"></i>
+                                        <span class="mt-1">{{ request.related_request.mobile }}</span><br>  
+                                        <i class="far fa-envelope mr-2 mt-1"></i>
+                                        <span class="mt-1">{{ request.related_request.requester.email }}</span><br>
+                                        <i class="fas fa-calendar-alt mr-2 mt-1"></i>
+                                        <span class="mt-1">{{ request.related_request.needed_by|date:"d M Y, H:i" }}</span>
+                                    </p>
+                                </div>
+                                
+                                <!-- Status Update Form -->
+                                <div class="col-12 mt-2">
+                                    <form method="post" action="{% url 'update_donation' request.pk %}" class="form-inline">
+                                        {% csrf_token %}
+                                        <div class="form-group mr-2">
+                                            <select name="status" class="form-control form-control-sm" required>
+                                                <option value="" selected disabled>Change status</option>
+                                                {% for code, name in status %}
+                                                <option value="{{ code }}" {% if code == request.status %}selected{% endif %}>
+                                                    {{ name }}
+                                                </option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <button type="submit" class="btn btn-sm btn-danger">
+                                            Update
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+

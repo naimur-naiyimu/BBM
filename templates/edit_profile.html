@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Edit Profile</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label class="form-label">First Name</label>
+                            <input type="text" name="first_name" value="{{ user.first_name }}" 
+                                   class="form-control">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Last Name</label>
+                            <input type="text" name="last_name" value="{{ user.last_name }}" 
+                                   class="form-control">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" name="email" value="{{ user.email }}" 
+                                   class="form-control">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Mobile</label>
+                            <input type="text" name="mobile" value="{{ user.mobile|default:'' }}" 
+                                   class="form-control">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Blood Group</label>
+                            <select name="blood_group" class="form-control">
+                                {% for code, name in user.BLOOD_GROUP_CHOICES %}
+                                <option value="{{ code }}" {% if code == user.blood_group %}selected{% endif %}>
+                                    {{ name }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Age</label>
+                            <input type="number" name="age" value="{{ user.age|default:'' }}" 
+                                   class="form-control">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Gender</label>
+                            <select name="gender" class="form-control">
+                                <option value="">Select Gender</option>
+                                {% for code, name in user.GENDER %}
+                                <option value="{{ code }}" {% if code == user.gender %}selected{% endif %}>
+                                    {{ name }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Address</label>
+                            <textarea name="addres" class="form-control">{{ user.addres|default:'' }}</textarea>
+                        </div>
+                        
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                Save Changes
+                            </button>
+                            <a href="{% url 'profile' %}" class="btn btn-secondary">
+                                Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

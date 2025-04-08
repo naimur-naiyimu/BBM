@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body text-center">
+                    {% if user.gender == 'female' %}
+                        <img src="{% static 'imgs/female.png' %}" 
+                             class="rounded-circle mb-3" 
+                             width="150" 
+                             alt="Profile Picture">
+                        <h4>Mrs. {{ user.get_full_name }}</h4>
+                    {% else %}
+                        <img src="{% static 'imgs/avatar-m.jpg' %}" 
+                             class="rounded-circle mb-3" 
+                             width="150" 
+                             alt="Profile Picture">
+                        <h4>Mr. {{ user.get_full_name }}</h4>
+                    {% endif %}
+                    <p class="text-muted">{{ user.email }}</p>
+                    <a href="{% url 'edit_profile' %}" class="btn btn-primary">
+                        Edit Profile
+                    </a>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h5>Quick Stats</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-3">
+                        <span>Blood Donations:</span>
+                        <span class="badge bg-primary">{{ donations_count }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span>Blood Requests:</span>
+                        <span class="badge bg-primary">{{ requests_count }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5>Personal Information</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Full Name</h6>
+                        </div>
+                        <div class="col-sm-9">
+                            {{ user.get_full_name }}
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Email</h6>
+                        </div>
+                        <div class="col-sm-9">
+                            {{ user.email }}
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Mobile</h6>
+                        </div>
+                        <div class="col-sm-9">
+                            {{ user.mobile|default:"Not provided" }}
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Blood Group</h6>
+                        </div>
+                        <div class="col-sm-9">
+                            {{ user.get_blood_group_display|default:"Not specified" }}
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Address</h6>
+                        </div>
+                        <div class="col-sm-9">
+                            {{ user.addres|default:"Not provided" }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

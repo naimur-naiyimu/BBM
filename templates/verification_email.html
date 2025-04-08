@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to BloodConnect</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background-color: #e74c3c;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px 5px 0 0;
+        }
+        .content {
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-left: 1px solid #ddd;
+            border-right: 1px solid #ddd;
+        }
+        .footer {
+            padding: 15px;
+            text-align: center;
+            font-size: 12px;
+            color: #777;
+            background-color: #f1f1f1;
+            border-radius: 0 0 5px 5px;
+            border-left: 1px solid #ddd;
+            border-right: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+        }
+        .button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #e74c3c;
+            color: white !important;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+        .logo {
+            max-width: 200px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="http://127.0.0.1:8000/static/imgs/logo.png" alt="BloodConnect Logo" class="logo" style="display: block;">
+        <h1>Welcome to BloodConnect!</h1>
+    </div>
+    
+    <div class="content">
+        <p>Dear {{ user.first_name }},</p>
+        
+        <p>Thank you for registering with BloodConnect. We're excited to have you join our community of lifesavers!</p>
+        
+        <p>To complete your registration and verify your email address, please click the button below:</p>
+        
+        <p style="text-align: center;">
+            <a href="{{ verification_link }}" class="button">Verify Email Address</a>
+        </p>
+        
+        <p>If the button doesn't work, copy and paste this link into your browser:</p>
+        <p style="word-break: break-all;">{{ verification_link }}</p>
+        
+        <p>Once verified, you'll be able to:</p>
+        <ul>
+            <li>Request blood donations when in need</li>
+            <li>Register as a donor to help others</li>
+            <li>Track your donation history</li>
+            <li>Receive urgent blood request notifications</li>
+        </ul>
+        
+        <p>If you didn't create this account, please ignore this email.</p>
+    </div>
+    
+    <div class="footer">
+        <p>© {% now "Y" %} BloodConnect. All rights reserved.</p>
+        <p>
+            <a href="https://yourwebsite.com/privacy" style="color: #777;">Privacy Policy</a> | 
+            <a href="https://yourwebsite.com/terms" style="color: #777;">Terms of Service</a>
+        </p>
+        <p>BloodConnect, ZUMS</p>
+    </div>
+</body>
+</html>

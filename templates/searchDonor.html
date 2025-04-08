@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Registration{% endblock %}
+
+{% block content %}
+
+    <!-- Search Donor -->
+    <h1 class="display-4 section-heading form-gap mb-5 text-center"><a href="{% url 'user-list'%}">Search Donor</a></h1>
+    <section id="search-card">
+        <div class="card container">
+            <div class="card-body">
+                <form class="container">
+                    <div class="row">
+                        <div class="col-12 col-lg-3 form-group">
+                            <label for="city">Choose City</label>
+                            <select name="city" class="form-control mb-3">
+                                <option value="None">Select a city</option>
+                                <option value="Airport Area">Airport Area</option>
+                                <option value="Azimpur">Azimpur</option>
+                                <option value="Badda">Badda</option>
+                                <option value="Banani">Banani</option>
+                                <option value="Baridhara">Baridhara</option>
+                                <option value="Bashundhara">Bashundhara</option>
+                                <option value="Cantonment">Cantonment</option>
+                                <option value="Demra">Demra</option>
+                                <option value="Dhanmondi">Dhanmondi</option>
+                                <option value="Elephant Road">Elephant Road</option>
+                                <option value="Farmgate">Farmgate</option>
+                                <option value="Gendaria">Gendaria</option>
+                                <option value="Green Road">Green Road</option>
+                                <option value="Gulshan">Gulshan</option>
+                                <option value="Hazaribagh">Hazaribagh</option>
+                                <option value="Jatrabari">Jatrabari</option>
+                                <option value="Kakrail">Kakrail</option>
+                                <option value="Kamalapur">Kamalapur</option>
+                                <option value="Khilgaon">Khilgaon</option>
+                                <option value="Kurmitola">Kurmitola</option>
+                                <option value="Lalmatia">Lalmatia</option>
+                                <option value="Malibagh">Malibagh</option>
+                                <option value="Mirpur">Mirpur</option>
+                                <option value="Moghbazar">Moghbazar</option>
+                                <option value="Mohakhali">Mohakhali</option>
+                                <option value="Mohammadpur">Mohammadpur</option>
+                                <option value="Motijheel">Motijheel</option>
+                                <option value="New Market">New Market</option>
+                                <option value="Niketan">Niketan</option>
+                                <option value="Old Dhaka">Old Dhaka</option>
+                                <option value="Paltan">Paltan</option>
+                                <option value="Panthapath">Panthapath</option>
+                                <option value="Ramna">Ramna</option>
+                                <option value="Rampura">Rampura</option>
+                                <option value="Sabujbagh">Sabujbagh</option>
+                                <option value="Shahbag">Shahbag</option>
+                                <option value="Shyamoli">Shyamoli</option>
+                                <option value="Tejgaon">Tejgaon</option>
+                                <option value="Tongi">Tongi</option>
+                                <option value="Uttara">Uttara</option>
+                                <option value="Wari">Wari</option>
+                            </select>
+                        </div>
+
+
+                        <div class="col-12 col-lg-7 form-group">
+                            <label for="blood-type">Blood Type</label><br>
+                            <label for="O+" class="radio-input mr-3">O+
+                                <input type="radio" id="O+" name="blood-type" value="O+">
+                                <span class="checkmark"></span>
+                            </label>
+                            <label for="O-" class="radio-input  mr-3">O-
+                                <input type="radio" id="O-" name="blood-type" value="O-">
+                                <span class="checkmark"></span>
+                            </label>
+                            <label for="A+" class="radio-input mr-3">A+
+                                <input type="radio" id="A+" name="blood-type" value="A+">
+                                <span class="checkmark"></span>
+                            </label>
+                            <label for="A-" class="radio-input mr-3">A-
+                                <input type="radio" id="A-" name="blood-type" value="A-">
+                                <span class="checkmark"></span>
+                            </label>
+                            <label for="B+" class="radio-input  mr-3">B+
+                                <input type="radio" id="B+" name="blood-type" value="B+">
+                                <span class="checkmark"></span>
+                            </label>
+                            <label for="B-" class="radio-input mr-3">B-
+                                <input type="radio" id="B-" name="blood-type" value="B-">
+                                <span class="checkmark"></span>
+                            </label>
+                            <label for="AB+" class="radio-input mr-3">AB+
+                                <input type="radio" id="AB+" name="blood-type" value="AB+">
+                                <span class="checkmark"></span>
+                            </label>
+                            <label for="AB-" class="radio-input  mr-3">AB-
+                                <input type="radio" id="AB-" name="blood-type" value="AB-">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                        <div class="col-2">
+                            <button type="submit" class="mb-4 mt-1 mt-lg-3 btn btn-lg btn-primary slide-btn">Search</button>
+                        </div>
+                    </div>
+                    <p class="d-inline">Haven't found donor? </p><span class="a-underline"><a href="{% url 'blood-request-create'%}">Place Blood Request</a></span>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Donors List -->
+    <section id="list" class="mt-5 gap-bottom">
+        <div class="container ">
+            <h3 class="my-5 red">Search Results ({{users_count}})</h3>
+            <div class="row">
+                {%for user in users%}
+                <div class="col-12 col-md-6 col-lg-4 my-2 content">
+                    <div class="card">
+                        <div class="card-body ">
+                            <div class="row ">
+                                <div class="col-4 d-flex flex-column justify-content-center align-items-center ">
+                                    <div class="blood-type text-center d-flex flex-column justify-content-center ">
+                                        <p class="vertical-center">{{user.blood_group }}</p>
+                                    </div>
+                                </div>
+                                <div class="col-8 ">
+                                    <h5 class="mt-1 card-title name">{{user.get_full_name}}
+                                        {% if user.gender == 'male' %}
+                                            <i class="ml-2 fas fa-male "></i>
+                                        {% elif user.gender == 'female' %}
+                                            <i class="ml-2 fas fa-female "></i>
+                                        {% endif %}
+                                    </h5>
+                                    <h6 class="card-subtitle mb-2 text-muted "><i class="fas fa-map-marker-alt mr-2 mt-1"></i><span class="mt-1">{{user.addres}}</span>
+                                    </h6>
+                                    <p class="mt-3 card-text info"><i class="fas fa-phone mr-2"></i><span>{{user.mobile}}</span><br><i class="far fa-envelope mr-2 mt-1"></i><span class="mt-1">{{user.email}}</span>
+                                    </p>
+                                    <p class="mt-3 card-text info"><i class="fas fa-calendar-alt mr-2 mt-1"></i><span>Last Donate: {{user.last_donation_date}}</p>
+                                </div>
+                                <div class="col-4"></div>
+                                <div class="col-8">
+                                    <button class="mt-3 slant-edge">
+                                        <p>Found Donor</p>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {%endfor%}
+                
+            </div>
+        </div>
+    </section>
+{% endblock %}
