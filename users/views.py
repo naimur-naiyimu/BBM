@@ -62,9 +62,9 @@ def register_user(request):
             print(f"User created: {user.email} | {user.first_name} {user.last_name}")
             
             # Send verification email
+            messages.success(request, 'Registration successful! Please check your email.')
             send_verification_email(request, user)
             
-            messages.success(request, 'Registration successful! Please check your email.')
             return redirect('login')
             
         except ValidationError as e:
@@ -119,6 +119,7 @@ def user_login(request):
 @login_required
 def user_logout(request):
     logout(request)
+    messages.success(request, "You have successfully logged out.")
     return redirect("index")
 
 @login_required

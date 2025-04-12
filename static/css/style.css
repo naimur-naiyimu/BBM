@@ -803,3 +803,28 @@ button:focus {
     font-weight: bold;
     color: #e74c3c;
   }
+
+
+  .alert-success {
+    background-color: #e74c3c !important;
+    color: white !important;
+    border-left-color: #c0392b !important;
+}
+
+.alert-error {  /* For error messages */
+    background-color: #c0392b !important;
+    color: white !important;
+    border-left-color: #922b21 !important;
+}
+
+.alert-warning {
+    background-color: #f39c12 !important;
+    color: white !important;
+    border-left-color: #d68910 !important;
+}
+
+.alert-info {
+    background-color: #3498db !important;
+    color: white !important;
+    border-left-color: #2980b9 !important;
+}

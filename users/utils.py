@@ -20,7 +20,7 @@ def send_verification_email(request, user):
     email_subject = "Verify Your Email Address"
     email_body = render_to_string(
         "verification_email.html",
-        {"user": user, "verification_link": verification_link},
+        {"user": user, "verification_link": verification_link, 'current_site': current_site.domain},
     )
 
     email = EmailMessage(
@@ -74,7 +74,7 @@ def send_blood_request_email(request, pk):
     email_subject = "Request to you for blood"
     email_body = render_to_string(
         "request_email.html",
-        {"verification_link": verification_link, 'blood_request':blood_request},
+        {"verification_link": verification_link, 'blood_request':blood_request , 'current_site': current_site.domain},
     )
     
     recipient_list = [user.email for user in users]
@@ -89,6 +89,6 @@ def send_blood_request_email(request, pk):
             bcc = recipient_list,
         )
 
-    email.content_subtype = "html"
-    email.send()
+        email.content_subtype = "html"
+        email.send()
 
