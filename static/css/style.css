@@ -811,7 +811,7 @@ button:focus {
     border-left-color: #c0392b !important;
 }
 
-.alert-error {  /* For error messages */
+.alert-error {  
     background-color: #c0392b !important;
     color: white !important;
     border-left-color: #922b21 !important;
