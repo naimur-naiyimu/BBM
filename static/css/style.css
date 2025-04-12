@@ -805,7 +805,7 @@ button:focus {
   }
 
 
-  .alert-success {
+  /* .alert-success {
     background-color: #e74c3c !important;
     color: white !important;
     border-left-color: #c0392b !important;
@@ -827,4 +827,4 @@ button:focus {
     background-color: #3498db !important;
     color: white !important;
     border-left-color: #2980b9 !important;
-}
+} */
