@@ -11,10 +11,10 @@ from .models import CustomUser
 from .utils import send_verification_email
 from .authentication import EmailBackend
 import re
-from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.csrf import  csrf_exempt
 
 # Registration and Verification
-
+@csrf_exempt
 def register_user(request):
     if request.method == 'POST':
         try:
@@ -95,7 +95,7 @@ def verify_email(request, uidb64, token):
     messages.error(request, 'Invalid verification link.')
     return redirect('register')
 
-@csrf_protect
+@csrf_exempt
 def user_login(request):
     if request.method == "POST":
         email = request.POST.get("email")

@@ -10,6 +10,7 @@ from datetime import datetime
 from django.http import HttpResponse
 from django.db.models import Case, When, Value, IntegerField
 from users.utils import send_blood_request_email
+from django.views.decorators.csrf import  csrf_exempt
 # Create your views here.
 def index(request):
     requests = BloodRequest.objects.all().filter(status='approved' ).order_by('-request_date')
@@ -19,6 +20,7 @@ def index(request):
     return render(request, 'index.html', {'blood_requests': requests, 'user_count': user_count, 'request_count': request_count, 'donation_count': donation_count})
 
 # Blood Request CRUD
+@csrf_exempt
 @login_required
 def create_blood_request(request):
     if request.method == 'POST':
@@ -95,6 +97,7 @@ def blood_request_list(request):
         'approved_count': approved_count
     })
 
+@csrf_exempt
 @login_required
 def update_blood_request(request, pk):
     blood_request = get_object_or_404(BloodRequest, pk=pk, requester=request.user)
@@ -141,6 +144,7 @@ def view_blood_request(request, pk):
 
     
 # Donation CRUD
+@csrf_exempt
 @login_required
 def create_donation(request, request_id):
     blood_request = get_object_or_404(BloodRequest, pk=request_id)
@@ -180,6 +184,7 @@ def donation_list(request):
 )
     return render(request, 'pendingRequests.html', {'donations': donations, 'status': Donation.STATUS_CHOICES})
 
+@csrf_exempt
 @login_required
 def update_donation(request, pk):
     donation = get_object_or_404(Donation, pk=pk, donor=request.user)
