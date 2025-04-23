@@ -136,7 +136,8 @@ def user_dashboard(request, user_id=None):
         'donations_count': donations_count,
         'requests_count': requests_count
     })
-
+    
+@csrf_exempt
 @login_required
 def edit_profile(request):
     user = request.user
