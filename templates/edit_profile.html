@@ -1,60 +1,72 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 <div class="container py-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">
-                    <h4>Edit Profile</h4>
+            <div class="card wow animate__animated animate__fadeInUp">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0"><i class="fas fa-user-edit mr-2"></i>Edit Profile</h4>
                 </div>
                 <div class="card-body">
                     <form method="post">
                         {% csrf_token %}
                         
-                        <div class="mb-3">
-                            <label class="form-label">First Name</label>
-                            <input type="text" name="first_name" value="{{ user.first_name }}" 
-                                   class="form-control">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label class="form-label text-danger"><i class="fas fa-user mr-2"></i>First Name</label>
+                                    <input type="text" name="first_name" value="{{ user.first_name }}" 
+                                           class="form-control" placeholder="Enter your first name">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label class="form-label text-danger"><i class="fas fa-user mr-2"></i>Last Name</label>
+                                    <input type="text" name="last_name" value="{{ user.last_name }}" 
+                                           class="form-control" placeholder="Enter your last name">
+                                </div>
+                            </div>
                         </div>
                         
-                        <div class="mb-3">
-                            <label class="form-label">Last Name</label>
-                            <input type="text" name="last_name" value="{{ user.last_name }}" 
-                                   class="form-control">
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label class="form-label">Email</label>
+                        <div class="form-group mb-3">
+                            <label class="form-label text-danger"><i class="fas fa-envelope mr-2"></i>Email</label>
                             <input type="email" name="email" value="{{ user.email }}" 
-                                   class="form-control">
+                                   class="form-control" placeholder="Enter your email">
                         </div>
                         
-                        <div class="mb-3">
-                            <label class="form-label">Mobile</label>
+                        <div class="form-group mb-3">
+                            <label class="form-label text-danger"><i class="fas fa-phone mr-2"></i>Mobile</label>
                             <input type="text" name="mobile" value="{{ user.mobile|default:'' }}" 
-                                   class="form-control">
+                                   class="form-control" placeholder="Enter your mobile number">
+                            <small class="form-text text-muted">Format: +880123456789</small>
                         </div>
                         
-                        <div class="mb-3">
-                            <label class="form-label">Blood Group</label>
-                            <select name="blood_group" class="form-control">
-                                {% for code, name in user.BLOOD_GROUP_CHOICES %}
-                                <option value="{{ code }}" {% if code == user.blood_group %}selected{% endif %}>
-                                    {{ name }}
-                                </option>
-                                {% endfor %}
-                            </select>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label class="form-label text-danger"><i class="fas fa-tint mr-2"></i>Blood Group</label>
+                                    <select name="blood_group" class="form-control">
+                                        {% for code, name in user.BLOOD_GROUP_CHOICES %}
+                                        <option value="{{ code }}" {% if code == user.blood_group %}selected{% endif %}>
+                                            {{ name }}
+                                        </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label class="form-label text-danger"><i class="fas fa-birthday-cake mr-2"></i>Age</label>
+                                    <input type="number" name="age" value="{{ user.age|default:'' }}" 
+                                           class="form-control" placeholder="Enter your age" min="16" max="65">
+                                </div>
+                            </div>
                         </div>
                         
-                        <div class="mb-3">
-                            <label class="form-label">Age</label>
-                            <input type="number" name="age" value="{{ user.age|default:'' }}" 
-                                   class="form-control">
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label class="form-label">Gender</label>
+                        <div class="form-group mb-3">
+                            <label class="form-label text-danger"><i class="fas fa-venus-mars mr-2"></i>Gender</label>
                             <select name="gender" class="form-control">
                                 <option value="">Select Gender</option>
                                 {% for code, name in user.GENDER %}
@@ -65,17 +77,18 @@
                             </select>
                         </div>
                         
-                        <div class="mb-3">
-                            <label class="form-label">Address</label>
-                            <textarea name="addres" class="form-control">{{ user.addres|default:'' }}</textarea>
+                        <div class="form-group mb-4">
+                            <label class="form-label text-danger"><i class="fas fa-map-marker-alt mr-2"></i>Address</label>
+                            <textarea name="addres" class="form-control" rows="3" 
+                                      placeholder="Enter your address">{{ user.addres|default:'' }}</textarea>
                         </div>
                         
-                        <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-primary">
-                                Save Changes
+                        <div class="d-flex justify-content-between">
+                            <button type="submit" class="btn btn-primary slide-btn">
+                                <i class="fas fa-save mr-2"></i>Save Changes
                             </button>
-                            <a href="{% url 'profile' %}" class="btn btn-secondary">
-                                Cancel
+                            <a href="{% url 'profile' %}" class="btn btn-secondary slide-btn">
+                                <i class="fas fa-times mr-2"></i>Cancel
                             </a>
                         </div>
                     </form>
@@ -84,4 +97,71 @@
         </div>
     </div>
 </div>
+
+<style>
+.card {
+    border: none;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.bg-primary {
+    background-color: #d12531 !important;
+}
+
+.text-danger {
+    color: #d12531 !important;
+}
+
+.form-control {
+    border: 1px solid rgba(209, 37, 49, 0.2);
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #d12531;
+    box-shadow: 0 0 0 0.2rem rgba(209, 37, 49, 0.25);
+}
+
+.form-label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.slide-btn {
+    width: auto;
+    padding: 8px 20px;
+    border-radius: 50px;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+}
+
+.form-text {
+    color: #6c757d !important;
+    font-size: 0.85rem;
+}
+
+select.form-control {
+    cursor: pointer;
+}
+
+textarea.form-control {
+    resize: vertical;
+}
+</style>
 {% endblock %}

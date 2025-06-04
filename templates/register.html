@@ -4,71 +4,179 @@
 {% block title %}Registration{% endblock %}
 
 {% block content %}
-
-    <!-- Register -->
-    <h1 class="display-4 section-heading form-gap mb-5 text-center">Registration Form</h1>
-    <section id="login-form" class="container">
-        <div class="col-lg-5 col-md-7 login-form card">
-            <div class="card-body my-4">
-                    <form method="post" class="mb-4" action="{% url 'register' %}">
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card wow animate__animated animate__fadeInUp">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0"><i class="fas fa-user-plus mr-2"></i>Registration Form</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post" action="{% url 'register' %}">
                         {% csrf_token %}
-                        <div class="form-group">
-                            <label for="first_name">First Name</label>
-                            <input type="text" class="form-control" name="first_name" id="first_name" placeholder="First Name" required>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label class="form-label text-danger"><i class="fas fa-user mr-2"></i>First Name</label>
+                                    <input type="text" class="form-control" name="first_name" id="first_name" 
+                                           placeholder="Enter your first name" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label class="form-label text-danger"><i class="fas fa-user mr-2"></i>Last Name</label>
+                                    <input type="text" class="form-control" name="last_name" id="last_name" 
+                                           placeholder="Enter your last name" required>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="last_name">Last Name</label>
-                            <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Last Name" required>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label class="form-label text-danger"><i class="fas fa-phone mr-2"></i>Mobile Number</label>
+                                    <input type="tel" class="form-control" name="mobile" id="mobile" 
+                                           placeholder="Enter your mobile number" required>
+                                    <small class="form-text text-muted">Format: +880123456789</small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label class="form-label text-danger"><i class="fas fa-phone mr-2"></i>Alternative Mobile</label>
+                                    <input type="tel" class="form-control" name="mobile2" id="mobile2" 
+                                           placeholder="Enter alternative mobile number">
+                                    <small class="form-text text-muted">Format: +880123456789</small>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="mobile">Mobile Number</label>
-                            <input type="tel" class="form-control" name="mobile" id="mobile"  placeholder="Mobile Number" required>
-                            <small class="mt-2 form-text text-muted">Format: +880123456789</small>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label class="form-label text-danger"><i class="fas fa-tint mr-2"></i>Blood Group</label>
+                                    <select name="blood_group" id="blood_group" class="form-control" required>
+                                        <option value="" selected disabled>Select Blood Group</option>
+                                        {% for code, name in blood_groups %}
+                                        <option value="{{ code }}">{{ name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label class="form-label text-danger"><i class="fas fa-birthday-cake mr-2"></i>Age</label>
+                                    <input type="number" class="form-control" name="age" id="age" 
+                                           placeholder="Enter your age" min="16" max="65" required>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="mobile2">Alternative Mobile Number</label>
-                            <input type="tel" class="form-control" name="mobile2" id="mobile2" placeholder="Alternative Mobile Number">
-                            <small class="mt-2 form-text text-muted">Format: +880123456789</small>
+                        
+                        <div class="form-group mb-3">
+                            <label class="form-label text-danger"><i class="fas fa-venus-mars mr-2"></i>Gender</label>
+                            <div class="d-flex">
+                                <div class="form-check me-4">
+                                    <input type="radio" class="form-check-input" id="male" name="gender" value="male" required checked>
+                                    <label class="form-check-label" for="male">Male</label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="radio" class="form-check-input" id="female" name="gender" value="female">
+                                    <label class="form-check-label" for="female">Female</label>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="blood_group">Blood Group</label>
-                            <select name="blood_group" id="blood_group" class="form-control" required>
-                                <option value="" selected disabled>Blood Group</option>
-                                {% for code, name in blood_groups %}
-                                <option value="{{ code }}">{{ name }}</option>
-                                {% endfor %}
-                            </select>
+                        
+                        <div class="form-group mb-3">
+                            <label class="form-label text-danger"><i class="fas fa-envelope mr-2"></i>Email</label>
+                            <input type="email" class="form-control" name="email" id="email" 
+                                   placeholder="Enter your email" required>
                         </div>
-                        <div class="form-group">
-                            <label for="gender">Gender</label><br>
-                            <label for="male" class="radio-input mr-3">Male
-                                <input type="radio" checked="checked" id="male" name="gender" value="male" required>
-                                <span class="checkmark"></span>
-                            </label>
-                            <label for="female" class="radio-input  mr-3">Female
-                                <input type="radio" id="female" name="gender" value="female">
-                                <span class="checkmark"></span>
-                            </label>
+                        
+                        <div class="form-group mb-4">
+                            <label class="form-label text-danger"><i class="fas fa-lock mr-2"></i>Password</label>
+                            <input type="password" class="form-control" name="password" id="password" 
+                                   placeholder="Enter your password" minlength="8" required>
+                            <small class="form-text text-muted">Password must be at least 8 characters long</small>
                         </div>
-                        <div class="form-group">
-                            <label for="age">Age</label>
-                            <input type="number" class="form-control" name="age" id="age" placeholder="Age" min="16" max="65" required>
+                        
+                        <div class="d-flex justify-content-between align-items-center">
+                            <button type="submit" class="btn btn-primary slide-btn">
+                                <i class="fas fa-user-plus mr-2"></i>Register
+                            </button>
+                            <p class="mb-0">Already have an account? <a href="{% url 'login' %}" class="text-danger">Login now</a></p>
                         </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" class="form-control" name="email" id="email" placeholder="Email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="password">Password</label>
-                            <input type="password" class="form-control" name="password" id="password" placeholder="Password" minlength="8" required>
-                        </div>
-                        <button type="submit" class="mt-3 btn btn-lg btn-primary slide-btn">Register</button>
                     </form>
-                    <p class="d-inline">If you have account then </p><span class="a-underline"><a
-                        href="{% url 'login'%}">Login now</a></span>
                 </div>
             </div>
         </div>
+    </div>
+</div>
 
-    </section>
+<style>
+.card {
+    border: none;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.bg-primary {
+    background-color: #d12531 !important;
+}
+
+.text-danger {
+    color: #d12531 !important;
+}
+
+.form-control {
+    border: 1px solid rgba(209, 37, 49, 0.2);
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #d12531;
+    box-shadow: 0 0 0 0.2rem rgba(209, 37, 49, 0.25);
+}
+
+.form-label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.slide-btn {
+    width: auto;
+    padding: 8px 20px;
+    border-radius: 50px;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.form-text {
+    color: #6c757d !important;
+    font-size: 0.85rem;
+}
+
+select.form-control {
+    cursor: pointer;
+}
+
+.form-check-input:checked {
+    background-color: #d12531;
+    border-color: #d12531;
+}
+
+.form-check-input:focus {
+    border-color: #d12531;
+    box-shadow: 0 0 0 0.2rem rgba(209, 37, 49, 0.25);
+}
+
+a.text-danger:hover {
+    color: #a81d27 !important;
+    text-decoration: none;
+}
+</style>
 {% endblock %}

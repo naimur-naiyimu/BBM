@@ -62,9 +62,4 @@ class CustomUser(AbstractUser):
     
     def __str__(self):
         return  f"{self.first_name} {self.last_name} {self.email}"
-    
-    @property
-    def is_available(self):
-        if self.last_donation_date and (datetime.date.today() - self.last_donation_date).days < 90:
-            return False
-        return True
+

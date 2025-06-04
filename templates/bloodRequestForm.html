@@ -4,73 +4,277 @@
 {% block title %}Blood Request{% endblock %}
 
 {% block content %}
-    <!-- Blood Request Info -->
-    <h1 class="display-4 section-heading form-gap mb-5 text-center">Blood Request</h1>
-    <section id="login-form" class="container">
-        <div class="col-lg-5 col-md-7 mb-5 login-form card">
-            <div class="card-body my-4">
-                <div class="container">
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8">
+            <div class="card wow animate__animated animate__fadeInUp">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0"><i class="fas fa-hand-holding-medical mr-2"></i>Blood Request Form</h4>
+                </div>
+                <div class="card-body">
                     <form method="post" action="{% url 'blood-request-create' %}">
                         {% csrf_token %}
-                        <div class="form-group">
-                            <label for="first_name">Patient Name</label>
-                            <input type="text" class="form-control" name="patient_name" id="patient_name" placeholder="Patient Name" required>
+                        
+                        <div class="form-group mb-3">
+                            <label class="form-label text-danger"><i class="fas fa-user mr-2"></i>Patient Name</label>
+                            <input type="text" class="form-control" name="patient_name" id="patient_name" 
+                                   placeholder="Enter patient's name" required>
                         </div>
-                        <div class="form-group">
-                            <label for="mobile">Patient's Relative Mobile Number</label>
-                            <input type="tel" class="form-control" name="mobile" id="mobile"  placeholder="Mobile Number" required>
-                            <small class="mt-2 form-text text-muted">Format: +880123456789</small>
+                        
+                        <div class="form-group mb-3">
+                            <label class="form-label text-danger"><i class="fas fa-phone mr-2"></i>Patient's Relative Mobile Number</label>
+                            <input type="tel" class="form-control" name="mobile" id="mobile" 
+                                   placeholder="Enter mobile number" required>
+                            <small class="form-text text-muted">Format: +880123456789</small>
                         </div>
-                        <div class="form-group">
-                            <label for="blood_group">Blood Group</label>
-                            <select name="blood_group" id="blood_group" class="form-control" required>
-                                <option value="" selected disabled>Blood Group</option>
-                                {% for code, name in blood_groups %}
-                                <option value="{{ code }}">{{ name }}</option>
-                                {% endfor %}
-                            </select>
+                        
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                <div class="form-group mb-3">
+                                    <label class="form-label text-danger"><i class="fas fa-tint mr-2"></i>Blood Group</label>
+                                    <select name="blood_group" id="blood_group" class="form-control" required>
+                                        <option value="" selected disabled>Select Blood Group</option>
+                                        {% for code, name in blood_groups %}
+                                        <option value="{{ code }}">{{ name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <div class="form-group mb-3">
+                                    <label class="form-label text-danger"><i class="fas fa-syringe mr-2"></i>Units Required</label>
+                                    <input type="number" class="form-control" name="units_required" id="units_required" 
+                                           placeholder="Enter units required" min="1" required>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="units_required">Units Required</label>
-                            <input type="number" class="form-control" name="units_required" id="units_required" placeholder="Units Required" min="1"  required>
+                        
+                        <div class="form-group mb-3">
+                            <label class="form-label text-danger"><i class="fas fa-venus-mars mr-2"></i>Gender</label>
+                            <div class="d-flex">
+                                <div class="form-check me-4">
+                                    <input type="radio" class="form-check-input" id="male" name="gender" value="male" required checked>
+                                    <label class="form-check-label" for="male">Male</label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="radio" class="form-check-input" id="female" name="gender" value="female">
+                                    <label class="form-check-label" for="female">Female</label>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="gender">Gender</label><br>
-                            <label for="male" class="radio-input mr-3">Male
-                                <input type="radio" checked="checked" id="male" name="gender" value="male" required>
-                                <span class="checkmark"></span>
-                            </label>
-                            <label for="female" class="radio-input  mr-3">Female
-                                <input type="radio" id="female" name="gender" value="female">
-                                <span class="checkmark"></span>
-                            </label>
-                        </div>
-                        <div class="form-group">
-                            <label for="urgency">Urgency</label>
-                            <select name="urgency" id="blood_group" class="form-control" required>
-                                <option value="" selected disabled>Urgency</option>
+                        
+                        <div class="form-group mb-3">
+                            <label class="form-label text-danger"><i class="fas fa-exclamation-circle mr-2"></i>Urgency</label>
+                            <select name="urgency" id="urgency" class="form-control" required>
+                                <option value="" selected disabled>Select Urgency Level</option>
                                 {% for code, name in urgency_choices %}
                                 <option value="{{ code }}">{{ name }}</option>
                                 {% endfor %}
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label for="purpose">Purpose</label>
-                            <input type="text" class="form-control" name="purpose" id="purpose" placeholder="Purpose" required>
+                        
+                        <div class="form-group mb-3">
+                            <label class="form-label text-danger"><i class="fas fa-info-circle mr-2"></i>Purpose</label>
+                            <input type="text" class="form-control" name="purpose" id="purpose" 
+                                   placeholder="Enter purpose of blood requirement" required>
                         </div>
-                        <div class="form-group">
-                            <label for="hospital">Hospital</label>
-                            <input type="text" class="form-control" name="hospital" id="hospital" placeholder="hospital" required>
+                        
+                        <div class="form-group mb-3">
+                            <label class="form-label text-danger"><i class="fas fa-hospital mr-2"></i>Hospital</label>
+                            <input type="text" class="form-control" name="hospital" id="hospital" 
+                                   placeholder="Enter hospital name" required>
                         </div>
-                        <div class="form-group">
-                            <label for="needed_by">Needed By</label>
-                            <input type="datetime-local" class="form-control" name="needed_by" id="needed_by" placeholder="Needed By" required>
+                        
+                        <div class="form-group mb-4">
+                            <label class="form-label text-danger"><i class="fas fa-calendar-alt mr-2"></i>Needed By</label>
+                            <input type="datetime-local" class="form-control" name="needed_by" id="needed_by" required>
                         </div>
-                        <button type="submit" class="mt-3 btn btn-lg btn-primary slide-btn">Request</button>
+                        
+                        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
+                            <button type="submit" class="btn btn-primary slide-btn w-100 w-md-auto">
+                                <i class="fas fa-paper-plane mr-2"></i>Submit Request
+                            </button>
+                            <a href="{% url 'blood_request_list' %}" class="btn btn-secondary slide-btn w-100 w-md-auto">
+                                <i class="fas fa-times mr-2"></i>Cancel
+                            </a>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
-    <section>
+    </div>
+</div>
 
+<style>
+.card {
+    border: none;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.bg-primary {
+    background-color: #d12531 !important;
+}
+
+.text-danger {
+    color: #d12531 !important;
+}
+
+.form-control {
+    border: 1px solid rgba(209, 37, 49, 0.2);
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #d12531;
+    box-shadow: 0 0 0 0.2rem rgba(209, 37, 49, 0.25);
+}
+
+.form-label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.slide-btn {
+    width: auto;
+    padding: 8px 20px;
+    border-radius: 50px;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.form-text {
+    color: #6c757d !important;
+    font-size: 0.85rem;
+}
+
+select.form-control {
+    cursor: pointer;
+}
+
+.form-check-input:checked {
+    background-color: #d12531;
+    border-color: #d12531;
+}
+
+.form-check-input:focus {
+    border-color: #d12531;
+    box-shadow: 0 0 0 0.2rem rgba(209, 37, 49, 0.25);
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    .container {
+        padding-top: 80px;
+    }
+
+    .card-header h4 {
+        font-size: 1.25rem;
+    }
+
+    .form-label {
+        font-size: 0.95rem;
+    }
+
+    .form-control {
+        font-size: 0.9rem;
+    }
+
+    .slide-btn {
+        padding: 6px 15px;
+        font-size: 0.85rem;
+    }
+
+    .form-text {
+        font-size: 0.8rem;
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+    }
+
+    .form-check-label {
+        font-size: 0.9rem;
+    }
+
+    .card-body {
+        padding: 1.25rem;
+    }
+
+    .gap-3 {
+        gap: 1rem !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .container {
+        padding-top: 70px;
+    }
+
+    .card-header h4 {
+        font-size: 1.1rem;
+    }
+
+    .form-label {
+        font-size: 0.9rem;
+    }
+
+    .form-control {
+        font-size: 0.85rem;
+        padding: 0.5rem 0.75rem;
+    }
+
+    .slide-btn {
+        padding: 5px 12px;
+        font-size: 0.8rem;
+    }
+
+    .form-text {
+        font-size: 0.75rem;
+    }
+
+    .form-check-label {
+        font-size: 0.85rem;
+    }
+
+    .card-body {
+        padding: 1rem;
+    }
+
+    .card-header {
+        padding: 0.75rem 1rem;
+    }
+
+    .form-group {
+        margin-bottom: 0.75rem;
+    }
+
+    .form-check {
+        margin-right: 1rem !important;
+    }
+
+    input[type="datetime-local"] {
+        font-size: 0.85rem;
+    }
+
+    .gap-3 {
+        gap: 0.75rem !important;
+    }
+}
+</style>
 {% endblock %}

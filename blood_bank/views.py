@@ -211,3 +211,17 @@ def delete_donation(request, pk):
         messages.success(request, 'Donation record deleted!')
         return redirect('donation_list')
     return render(request, 'bloodbank/confirm_delete.html', {'object': donation})
+
+@login_required
+def reject_blood_request(request, request_id):
+    blood_request = get_object_or_404(BloodRequest, pk=request_id)
+    if request.method == 'POST':
+        # Assuming 'pending' is the status for rejected requests as per user request
+        blood_request.status = 'approved' 
+        blood_request.save()
+        messages.success(request, 'Blood request rejected.')
+        # Redirect to a suitable page, e.g., the index or a donor dashboard
+        return redirect('index')  
+    # If not a POST request, redirect or show an error
+    messages.error(request, 'Invalid request method.')
+    return redirect('index') # Redirect to index or relevant page

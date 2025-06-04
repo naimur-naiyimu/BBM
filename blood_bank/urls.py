@@ -11,6 +11,7 @@ urlpatterns = [
     path('requests/new/', views.create_blood_request, name='blood-request-create'),
     path('requests/edit/<int:pk>/', views.update_blood_request, name='update_blood_request'),
     path('requests/delete/<int:pk>/', views.delete_blood_request, name='delete_blood_request'),
+    path('requests/<int:request_id>/reject/', views.reject_blood_request, name='reject_blood_request'),
     
     # Donations
     path('donations/', views.donation_list, name='donation_list'),
