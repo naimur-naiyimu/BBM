@@ -2,6 +2,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 import os
 import datetime
+import dj_database_url
 load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -14,7 +15,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-@73s11+tvbqdpdf7bjxb(qj(ex6o^#fd@!djs4mns#nb=^htc9'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
 
 ALLOWED_HOSTS = ['*']
 CSRF_TRUSTED_ORIGINS = [
@@ -78,6 +79,8 @@ DATABASES = {
     }
 }
 
+DATABASES["default"] = dj_database_url.parse(os.getenv("DATABASE_URL"))
+#postgresql://zums_bbm_user:BNPGBYzSxMkOVhNIWRjLc8OnerwAhtE3@dpg-d159i4muk2gs73bvsjn0-a.oregon-postgres.render.com/zums_bbm
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
