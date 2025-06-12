@@ -137,6 +137,17 @@
             });
             
             new WOW().init();
+
+            // Ticker animation
+            function resetTicker() {
+                $('.ticker-content').css('animation', 'none');
+                setTimeout(function() {
+                    $('.ticker-content').css('animation', 'ticker 20s linear infinite');
+                }, 10);
+            }
+
+            // Reset ticker on window resize
+            $(window).on('resize', resetTicker);
         });
     </script>
     {% endblock %}
@@ -144,6 +155,41 @@
 </html>
 
 <style>
+/* Ticker Styles */
+.ticker-container {
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.ticker-content {
+    display: inline-block;
+    animation: ticker 20s linear infinite;
+}
+
+.ticker-text {
+    display: inline-block;
+    padding: 0 20px;
+    color: #333;
+}
+
+.ticker-text .highlight {
+    color: #D12531;
+    font-weight: 600;
+}
+
+@keyframes ticker {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
 /* Mobile Responsive Styles */
 @media (max-width: 768px) {
     .navbar-brand img {

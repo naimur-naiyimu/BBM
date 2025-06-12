@@ -12,7 +12,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-@73s11+tvbqdpdf7bjxb(qj(ex6o^#fd@!djs4mns#nb=^htc9'
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-@73s11+tvbqdpdf7bjxb(qj(ex6o^#fd@!djs4mns#nb=^htc9')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
@@ -73,14 +73,11 @@ WSGI_APPLICATION = 'blood_bank_management.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        default=os.getenv('DATABASE_URL'),
+        conn_max_age=600
+    )
 }
-
-DATABASES["default"] = dj_database_url.parse(os.getenv("DATABASE_URL"))
-#postgresql://zums_bbm_user:BNPGBYzSxMkOVhNIWRjLc8OnerwAhtE3@dpg-d159i4muk2gs73bvsjn0-a.oregon-postgres.render.com/zums_bbm
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -146,10 +143,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-# EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER") #ytho sohv gxfj pkdc
-# EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
-EMAIL_HOST_USER = 'naimur.tele@gmail.com'
-EMAIL_HOST_PASSWORD = 'ytho sohv gxfj pkdc'
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', 'naimur.tele@gmail.com')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', 'ytho sohv gxfj pkdc')
 
 
 LOGIN_REDIRECT_URL = 'index'
