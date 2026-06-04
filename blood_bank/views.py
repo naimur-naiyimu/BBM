@@ -10,7 +10,6 @@ from datetime import datetime
 from django.http import HttpResponse
 from django.db.models import Case, When, Value, IntegerField
 from users.utils import send_blood_request_email
-from django.views.decorators.csrf import  csrf_exempt
 # Create your views here.
 def index(request):
     requests = BloodRequest.objects.all().filter(status='approved' ).order_by('-request_date')
@@ -20,7 +19,6 @@ def index(request):
     return render(request, 'index.html', {'blood_requests': requests, 'user_count': user_count, 'request_count': request_count, 'donation_count': donation_count})
 
 # Blood Request CRUD
-@csrf_exempt
 @login_required
 def create_blood_request(request):
     if request.method == 'POST':
@@ -97,7 +95,6 @@ def blood_request_list(request):
         'approved_count': approved_count
     })
 
-@csrf_exempt
 @login_required
 def update_blood_request(request, pk):
     blood_request = get_object_or_404(BloodRequest, pk=pk, requester=request.user)
@@ -144,7 +141,6 @@ def view_blood_request(request, pk):
 
     
 # Donation CRUD
-@csrf_exempt
 @login_required
 def create_donation(request, request_id):
     blood_request = get_object_or_404(BloodRequest, pk=request_id)
@@ -184,16 +180,33 @@ def donation_list(request):
 )
     return render(request, 'pendingRequests.html', {'donations': donations, 'status': Donation.STATUS_CHOICES})
 
-@csrf_exempt
 @login_required
 def update_donation(request, pk):
-    donation = get_object_or_404(Donation, pk=pk, donor=request.user)
+    from django.db.models import Q
+    if request.user.is_staff:
+        donation = get_object_or_404(Donation, pk=pk)
+    else:
+        donation = get_object_or_404(
+            Donation, 
+            Q(pk=pk) & (Q(donor=request.user) | Q(related_request__requester=request.user))
+        )
     
     if request.method == 'POST':
         try:
-            donation.status = request.POST['status']
+            new_status = request.POST.get('status')
+            is_donor = (donation.donor == request.user)
+            is_requester = (donation.related_request and donation.related_request.requester == request.user)
+            is_staff = request.user.is_staff
+            
+            if new_status in ['approved', 'completed'] and is_donor and not (is_requester or is_staff):
+                messages.error(request, 'You cannot approve or complete your own donation.')
+                return redirect('donation_list')
+                
+            donation.status = new_status
             donation.save()
             messages.success(request, 'Donation record updated successfully!')
+            if is_requester:
+                return redirect('blood_request_list')
             return redirect('donation_list')
         except Exception as e:
             messages.error(request, f'Error: {str(e)}')
@@ -214,14 +227,15 @@ def delete_donation(request, pk):
 
 @login_required
 def reject_blood_request(request, request_id):
-    blood_request = get_object_or_404(BloodRequest, pk=request_id)
+    if request.user.is_staff:
+        blood_request = get_object_or_404(BloodRequest, pk=request_id)
+    else:
+        blood_request = get_object_or_404(BloodRequest, pk=request_id, requester=request.user)
+        
     if request.method == 'POST':
-        # Assuming 'pending' is the status for rejected requests as per user request
-        blood_request.status = 'approved' 
+        blood_request.status = 'rejected' 
         blood_request.save()
         messages.success(request, 'Blood request rejected.')
-        # Redirect to a suitable page, e.g., the index or a donor dashboard
-        return redirect('index')  
-    # If not a POST request, redirect or show an error
+        return redirect('blood_request_list')  
     messages.error(request, 'Invalid request method.')
-    return redirect('index') # Redirect to index or relevant page
+    return redirect('blood_request_list')

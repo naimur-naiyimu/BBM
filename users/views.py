@@ -11,24 +11,27 @@ from .models import CustomUser
 from .utils import send_verification_email
 from .authentication import EmailBackend
 import re
-from django.views.decorators.csrf import  csrf_exempt
 
 # Registration and Verification
-@csrf_exempt
 def register_user(request):
     if request.method == 'POST':
         try:
             # Extract data
-            email = request.POST.get('email').strip()
+            email_raw = request.POST.get('email')
             password = request.POST.get('password')
-            first_name = request.POST.get('first_name', '').strip()
-            last_name = request.POST.get('last_name', '').strip()
-            mobile = request.POST.get('mobile', '').strip()
+            first_name_raw = request.POST.get('first_name')
+            last_name_raw = request.POST.get('last_name')
+            mobile_raw = request.POST.get('mobile')
             blood_group = request.POST.get('blood_group')
 
             # Basic validation
-            if not all([email, password, first_name, last_name, mobile, blood_group]):
+            if not all([email_raw, password, first_name_raw, last_name_raw, mobile_raw, blood_group]):
                 raise ValidationError("All required fields must be filled")
+
+            email = email_raw.strip()
+            first_name = first_name_raw.strip()
+            last_name = last_name_raw.strip()
+            mobile = mobile_raw.strip()
 
             validate_email(email)
             
@@ -95,7 +98,6 @@ def verify_email(request, uidb64, token):
     messages.error(request, 'Invalid verification link.')
     return redirect('register')
 
-@csrf_exempt
 def user_login(request):
     if request.method == "POST":
         email = request.POST.get("email")
@@ -126,6 +128,9 @@ def user_logout(request):
 def user_dashboard(request, user_id=None):
     if user_id:
         user = get_object_or_404(CustomUser, pk=user_id)
+        if user != request.user and not request.user.is_staff:
+            messages.error(request, "You are not authorized to view this profile.")
+            return redirect('profile')
     else:
         user = request.user
     donations_count = user.donations.count()
@@ -137,7 +142,6 @@ def user_dashboard(request, user_id=None):
         'requests_count': requests_count
     })
     
-@csrf_exempt
 @login_required
 def edit_profile(request):
     user = request.user

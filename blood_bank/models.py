@@ -55,23 +55,21 @@ class Donation(models.Model):
     related_request = models.ForeignKey(BloodRequest, on_delete=models.SET_NULL, null=True, blank=True,related_name='donations')
     
     
-    def set_donation_date(self, request):
-        self.donation_date = request.needed_by
-    
     def save(self, *args, **kwargs):
+        from django.utils import timezone
         # Check if the instance already exists to compare status changes
         if self.pk:
             old_donation = Donation.objects.get(pk=self.pk)
             # If status is changing to 'completed' and it wasn't completed before
             if self.status == 'completed' and old_donation.status != 'completed':
-                self.donor.last_donation_date = self.donation_date.date()
+                self.donor.last_donation_date = self.donation_date.date() if self.donation_date else timezone.now().date()
                 self.donor.donation_times += 1
                 self.donor.is_available = False # Set is_available to False
                 self.donor.save()
         else:
              # For new donations, if status is 'completed' upon creation (less common)
              if self.status == 'completed':
-                self.donor.last_donation_date = self.donation_date.date()
+                self.donor.last_donation_date = timezone.now().date()
                 self.donor.donation_times += 1
                 self.donor.is_available = False # Set is_available to False
                 self.donor.save()

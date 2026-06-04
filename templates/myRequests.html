@@ -18,7 +18,7 @@
             <div class="row">
                 {% for request in requests %}
                 {% if request.status == 'approved' %}
-                    <div class="col-6 col-md-6 col-lg-4 my-2">
+                    <div class="col-12 col-md-6 col-lg-4 my-2">
                         <div class="card">
                             <div class="card-body pb-4">
                                 <div class="row">
@@ -76,7 +76,7 @@
             <div class="row">
                 {% for request in requests %}
                 {% if request.status == 'pending' %}
-                    <div class="col-6 col-md-6 col-lg-4 my-2">
+                    <div class="col-12 col-md-6 col-lg-4 my-2">
                         <div class="card">
                             <div class="card-body pb-4">
                                 <div class="row">
@@ -87,15 +87,32 @@
                                     </div>
                                     <div class="col-8">
                                         {% for donation in request.all_donations %}
-                                        {% if donation.status == 'pending' %}
-                                        <div class="approved-donor mt-2">
-                                            <p class="text-success">
+                                        <div class="approved-donor mt-2 p-2 border rounded bg-light">
+                                            <p class="text-success mb-1">
                                                 <i class="fas fa-check-circle"></i>
-                                                Accepted by: <a href="{% url 'profile' %}?user_id={{ donation.donor.pk }}">{{ donation.donor.first_name }}</a>
+                                                Accepted by: <a href="{% url 'profile' %}?user_id={{ donation.donor.pk }}">{{ donation.donor.first_name }} {{ donation.donor.last_name }}</a>
                                             </p>
+                                            <p class="small text-muted mb-1">Status: <strong>{{ donation.get_status_display }}</strong></p>
+                                            {% if donation.status == 'pending' %}
+                                            <div class="d-flex mt-2">
+                                                <form method="post" action="{% url 'update_donation' donation.pk %}" class="mr-2">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="status" value="completed">
+                                                    <button type="submit" class="btn btn-sm btn-success py-1 px-3" style="font-size: 0.8rem; border-radius: 4px;">
+                                                        Confirm Donated
+                                                    </button>
+                                                </form>
+                                                <form method="post" action="{% url 'update_donation' donation.pk %}">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="status" value="rejected">
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger py-1 px-3" style="font-size: 0.8rem; border-radius: 4px;">
+                                                        Reject
+                                                    </button>
+                                                </form>
+                                            </div>
+                                            {% endif %}
                                         </div>
-                                        {% endif %}
-                                    {% endfor %}
+                                        {% endfor %}
                                         <h5 class="mt-1 card-title name">For {{ request.patient_name }}
                                             {% if request.gender == 'male' %}
                                                 <i class="ml-2 fas fa-male "></i>
