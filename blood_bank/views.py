@@ -106,15 +106,27 @@ def update_blood_request(request, pk):
             blood_request.purpose = request.POST['purpose']
             blood_request.hospital = request.POST['hospital']
             blood_request.urgency = request.POST['urgency']
-            blood_request.needed_by = request.POST['needed_by']
+            
+            from datetime import datetime
+            needed_by_str = request.POST.get('needed_by')
+            if needed_by_str:
+                naive_datetime = datetime.strptime(needed_by_str, '%Y-%m-%dT%H:%M')
+                blood_request.needed_by = timezone.make_aware(naive_datetime)
+            
             blood_request.save()
             messages.success(request, 'Request updated successfully!')
             return redirect('blood_request_list')
         except Exception as e:
             messages.error(request, f'Error: {str(e)}')
     
-    return render(request, 'bloodbank/update_request.html', {
-        'request': blood_request,
+    # Format the needed_by datetime for the template input
+    needed_by_formatted = ""
+    if blood_request.needed_by:
+        needed_by_formatted = timezone.localtime(blood_request.needed_by).strftime('%Y-%m-%dT%H:%M')
+        
+    return render(request, 'update_request.html', {
+        'request_obj': blood_request,
+        'needed_by_formatted': needed_by_formatted,
         'blood_groups': CustomUser.BLOOD_GROUP_CHOICES,
         'urgency_choices': BloodRequest._meta.get_field('urgency').choices
     })
@@ -126,7 +138,7 @@ def delete_blood_request(request, pk):
         blood_request.delete()
         messages.success(request, 'Request deleted successfully!')
         return redirect('blood_request_list')
-    return render(request, 'bloodbank/confirm_delete.html', {'object': blood_request})
+    return render(request, 'confirm_delete.html', {'object': blood_request})
 
 
 def view_blood_request(request, pk):
@@ -223,7 +235,7 @@ def delete_donation(request, pk):
         donation.delete()
         messages.success(request, 'Donation record deleted!')
         return redirect('donation_list')
-    return render(request, 'bloodbank/confirm_delete.html', {'object': donation})
+    return render(request, 'confirm_delete.html', {'object': donation})
 
 @login_required
 def reject_blood_request(request, request_id):

@@ -1,3 +1,7 @@
+
+h1, h2, h3, h4, h5, h6, .section-heading, .content-heading, .nav-link, .navbar-brand {
+    font-family: 'Poppins', 'Nunito', sans-serif;
+}
 /*==============
   document style
   ==============*/
@@ -16,12 +20,12 @@ html {
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Nunito', sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 .section-heading {
     font-weight: 600;
-    color: #d12531;
+    color: #C0392B;
     line-height: 1.05;
     text-transform: uppercase;
 }
@@ -33,7 +37,7 @@ body {
 }
 
 .content-heading {
-    color: #d12531;
+    color: #C0392B;
     text-transform: uppercase;
     font-weight: 600;
     font-size: 1.25rem;
@@ -65,7 +69,7 @@ i:hover {
 }
 
 a {
-    color: #d12531;
+    color: #C0392B;
 }
 
 a:hover {
@@ -74,7 +78,7 @@ a:hover {
 }
 
 .a-underline a {
-    color: #d12531;
+    color: #C0392B;
     text-decoration: underline;
 }
 
@@ -114,8 +118,8 @@ ul {
 
 .btn-primary.focus,
 .btn-primary:focus {
-    border-color: #d12531;
-    background-color: #d12531;
+    border-color: #C0392B;
+    background-color: #C0392B;
     color: white;
     box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.4);
 }
@@ -124,8 +128,8 @@ ul {
 .btn-primary:not(:disabled):not(.disabled):active,
 .show>.btn-primary.dropdown-toggle {
     color: #fff;
-    border-color: #d12531;
-    background-color: #d12531;
+    border-color: #C0392B;
+    background-color: #C0392B;
 }
 
 .btn-primary:not(:disabled):not(.disabled).active:focus,
@@ -140,11 +144,11 @@ ul {
   ============*/
 
 .navbar-light .navbar-nav .nav-link {
-    color: #D12531;
+    color: #C0392B;
 }
 
 .dropdown-menu .dropdown-item {
-    color: #D12531;
+    color: #C0392B;
 }
 
 .bg-light {
@@ -153,7 +157,7 @@ ul {
 
 .dropdown-item:active,
 .dropdown-item:hover {
-    color: #D12531;
+    color: #C0392B;
     text-decoration: none;
     background-color: #FCEEEF;
 }
@@ -176,7 +180,7 @@ input[type="radio"]:checked {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: bottom right;
-    color: #d12531;
+    color: #C0392B;
     padding: 8rem 0 13rem 0;
 }
 
@@ -188,15 +192,15 @@ input[type="radio"]:checked {
     font-weight: 200;
     font-size: 1.1rem;
     letter-spacing: 0.75px;
-    color: #d12531;
+    color: #C0392B;
     margin-bottom: 2.5rem;
     margin-left: 12rem;
     margin-right: 12rem;
 }
 
 .slide-btn {
-    border-color: #d12531;
-    background-color: #d12531;
+    border-color: #C0392B;
+    background-color: #C0392B;
     color: white;
     width: 8rem;
     font-size: 0.9rem;
@@ -207,8 +211,8 @@ input[type="radio"]:checked {
 
 .slide-btn:hover {
     background-color: #FCEEEF;
-    color: #d12531;
-    border-color: #d12531;
+    color: #C0392B;
+    border-color: #C0392B;
 }
 
 
@@ -250,9 +254,9 @@ input[type="radio"]:checked {
 }
 
 .blood-type {
-    background-color: #d12531;
+    background-color: #C0392B;
     color: white;
-    border: 1px solid #d12531;
+    border: 1px solid #C0392B;
     border-radius: 50%;
     width: 60px;
     height: 60px;
@@ -263,7 +267,7 @@ input[type="radio"]:checked {
 }
 
 .text-muted {
-    color: #d12531 !important;
+    color: #C0392B !important;
 }
 
 
@@ -277,7 +281,7 @@ input[type="radio"]:checked {
 }
 
 #counter {
-    background: linear-gradient(rgba(209, 37, 49, 0.8), rgba(209, 37, 49, 0.8)), url('../imgs/cover.jpeg');
+    background: linear-gradient(rgba(192, 57, 43, 0.8), rgba(192, 57, 43, 0.8)), url('../imgs/cover.jpeg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
@@ -340,7 +344,7 @@ input[type="radio"]:checked {
 
 #contact-us {
     background-color: #FCEEEF;
-    color: #D12531;
+    color: #C0392B;
     padding: 4rem 0;
 }
 
@@ -350,7 +354,7 @@ input[type="radio"]:checked {
 }
 
 #contact-us a {
-    color: #D12531;
+    color: #C0392B;
 }
 
 
@@ -517,15 +521,15 @@ input[type="radio"]:checked {
 
 #login-form div.card {
     background-color: white;
-    color: #D12531;
+    color: #C0392B;
 }
 #register-form div.card {
     background-color: white;
-    color: #D12531;
+    color: #C0392B;
 }
 
 .text-muted {
-    color: #D12531 !important;
+    color: #C0392B !important;
 }
 
 
@@ -565,7 +569,7 @@ input[type="radio"]:checked {
 }
 
 .radio-input input:checked~.checkmark {
-    background-color: #D12531;
+    background-color: #C0392B;
 }
 
 .checkmark:after {
@@ -668,7 +672,7 @@ button:focus {
 }
 
 .red {
-    color: #d12531;
+    color: #C0392B;
 }
 
 .blue {
@@ -680,7 +684,7 @@ button:focus {
 }
 .a-underline {
     text-decoration: underline;
-    color: #d12531;
+    color: #C0392B;
   }
 
 /* Status Badge Colors */
@@ -828,3 +832,171 @@ button:focus {
     color: white !important;
     border-left-color: #2980b9 !important;
 } */
+/* UX Audit Brand Styles */
+:root {
+    --primary-crimson: #C0392B;
+    --primary-dark: #A93226;
+    --primary-light: #FADBD8;
+    --charcoal-gray: #333333;
+    --text-muted: #7F8C8D;
+    --emergency-color: #E74C3C;
+    --urgent-color: #E67E22;
+    --normal-color: #2ECC71;
+}
+
+.text-charcoal {
+    color: var(--charcoal-gray);
+}
+
+.bg-crimson {
+    background-color: var(--primary-crimson);
+}
+
+/* Urgency badge styles */
+.badge-urgency {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: 50px;
+    text-transform: uppercase;
+}
+.urgency-emergency {
+    background-color: #FDEDEC;
+    color: #E74C3C;
+    border: 1px solid #F5B7B1;
+}
+.urgency-urgent {
+    background-color: #FEF9E7;
+    color: #D35400;
+    border: 1px solid #F9E79F;
+}
+.urgency-normal {
+    background-color: #EAF2F8;
+    color: #2980B9;
+    border: 1px solid #A9CCE3;
+}
+
+/* Card Redesign */
+.request-card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    background-color: #ffffff !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.request-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(192, 57, 43, 0.15);
+}
+.request-card-header {
+    background-color: #FDEDEC;
+    padding: 1.25rem;
+    border-bottom: 1px solid #FADBD8;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.request-card-body {
+    padding: 1.5rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+.request-card-footer {
+    padding: 1rem 1.5rem;
+    background-color: #FDFEFE;
+    border-top: 1px solid #EAEDED;
+}
+.blood-badge-large {
+    width: 50px;
+    height: 50px;
+    background-color: var(--primary-crimson);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 10px rgba(192, 57, 43, 0.3);
+}
+.info-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+    color: #4D5656;
+}
+.info-row i {
+    width: 24px;
+    color: var(--primary-crimson);
+    font-size: 1.05rem;
+}
+
+/* Brand Buttons */
+.btn-bleed {
+    background-color: var(--primary-crimson);
+    color: white !important;
+    border-radius: 8px;
+    padding: 0.6rem 1.2rem;
+    font-weight: 600;
+    transition: all 0.3s;
+    border: 1px solid var(--primary-crimson);
+}
+.btn-bleed:hover {
+    background-color: white;
+    color: var(--primary-crimson) !important;
+    box-shadow: 0 4px 10px rgba(192, 57, 43, 0.2);
+}
+
+/* Fast-track Sticky Banner */
+.emergency-banner {
+    background: linear-gradient(135deg, #C0392B 0%, #E74C3C 100%);
+    color: white;
+    padding: 0.75rem 0;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+.emergency-banner a {
+    color: white !important;
+    text-decoration: underline;
+    font-weight: 700;
+}
+
+/* Filter bar styles */
+.filter-bar {
+    background-color: #F8F9F9;
+    border-radius: 8px;
+    padding: 1.25rem;
+    margin-bottom: 2rem;
+    border: 1px solid #EBEDEF;
+}
+
+/* How It Works Section */
+.how-it-works-step {
+    text-align: center;
+    padding: 1.5rem;
+}
+.how-it-works-icon {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background-color: #FDEDEC;
+    color: var(--primary-crimson);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    margin-bottom: 1.25rem;
+}
+
+/* Tooltip container */
+.auth-tooltip-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}

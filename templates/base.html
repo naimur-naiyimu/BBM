@@ -10,9 +10,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
-    <!-- Font Nunito -->
+    <!-- Font Nunito, Poppins & Inter -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&family=Poppins:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Animate CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <!-- CSS Stylesheet -->
@@ -52,7 +52,7 @@
                         <a href="{% url 'index' %}" class="nav-link">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a href="{% url 'user-list' %}" class="nav-link">Doner</a>
+                        <a href="{% url 'user-list' %}" class="nav-link">Donor</a>
                     </li>
                     {% if user.is_authenticated %}
                     <li class="nav-item">
@@ -105,9 +105,9 @@
                 </div>
                 <div class="col-6 col-md-5 text-center">
                     <ul class="social-links">
-                        <li><i class="fab fa-instagram mr-2"></i><a href="#">bleedtosave</a></li>
-                        <li><i class="fab fa-facebook mr-2"></i><a href="#">bleedtosave</a></li>
-                        <li><i class="fab fa-twitter mr-2"></i><a href="#">bleedtosave</a></li>
+                        <li><i class="fab fa-instagram mr-2"></i><a href="https://instagram.com/bleedtosave" target="_blank">bleedtosave</a></li>
+                        <li><i class="fab fa-facebook mr-2"></i><a href="https://facebook.com/bleedtosave" target="_blank">bleedtosave</a></li>
+                        <li><i class="fab fa-twitter mr-2"></i><a href="https://twitter.com/bleedtosave" target="_blank">bleedtosave</a></li>
                     </ul>
                 </div>
             </div>
@@ -152,6 +152,27 @@
             $(window).on('resize', resetTicker);
         });
     </script>
+    <!-- Auth Required Modal -->
+    <div class="modal fade" id="authRequiredModal" tabindex="-1" role="dialog" aria-labelledby="authRequiredModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" style="border-radius: 12px; border: none; box-shadow: 0 10px 30px rgba(0,0,0,0.15);">
+          <div class="modal-header" style="border-bottom: none; padding: 1.5rem 1.5rem 0.5rem 1.5rem;">
+            <h5 class="modal-title font-weight-bold" id="authRequiredModalLabel" style="color: #C0392B; font-family: 'Poppins', sans-serif;">Account Required</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" style="padding: 0.5rem 1.5rem 1.5rem 1.5rem; font-family: 'Inter', sans-serif;">
+            <p style="font-size: 1.05rem; color: #555; line-height: 1.5;">You need a free account to accept blood requests and connect with donors. Creating an account takes less than 30 seconds!</p>
+            <div class="d-flex justify-content-end mt-4">
+              <button type="button" class="btn btn-light mr-2" data-dismiss="modal" style="border-radius: 8px; font-weight: 600;">Cancel</button>
+              <a href="{% url 'register' %}" class="btn" style="border-radius: 8px; font-weight: 600; background-color: #C0392B; color: white;">Register Now</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     {% endblock %}
 </body>
 </html>
@@ -179,7 +200,7 @@
 }
 
 .ticker-text .highlight {
-    color: #D12531;
+    color: #C0392B;
     font-weight: 600;
 }
 
@@ -243,7 +264,7 @@
     }
 
     .nav-link:hover {
-        background: rgba(209, 37, 49, 0.1);
+        background: rgba(192, 57, 43, 0.1);
     }
 }
 
@@ -308,7 +329,7 @@
 }
 
 .footer-links a, .social-links a {
-    color: #D12531;
+    color: #C0392B;
     text-decoration: none;
     transition: color 0.3s ease;
 }
@@ -318,7 +339,7 @@
 }
 
 .social-links i {
-    color: #D12531;
+    color: #C0392B;
 }
 
 /* Navbar Mobile Styles */
@@ -368,11 +389,11 @@
 
 .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon:before {
     transform: translateY(8px) rotate(45deg); /* Rotate and move top line */
-    background-color: #D12531;
+    background-color: #C0392B;
 }
 
 .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon:after {
     transform: translateY(-8px) rotate(-45deg); /* Rotate and move bottom line */
-    background-color: #D12531;
+    background-color: #C0392B;
 }
 </style>

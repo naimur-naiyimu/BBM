@@ -107,46 +107,58 @@
     </section>
 
     <!-- Donors List -->
-    <section id="list" class="mt-5 gap-bottom">
-        <div class="container ">
-            <h3 class="my-5 red">Search Results ({{users_count}})</h3>
+    <section id="list" class="mt-5 gap-bottom bg-light py-5">
+        <div class="container">
+            <h3 class="my-4 font-weight-bold text-charcoal" style="font-family: 'Poppins', sans-serif;"><i class="fas fa-search mr-2 text-danger"></i>Search Results ({{users_count}})</h3>
             <div class="row">
-                {%for user in users%}
-                <div class="col-12 col-md-6 col-lg-4 my-2 content">
-                    <div class="card">
-                        <div class="card-body ">
-                            <div class="row ">
-                                <div class="col-4 d-flex flex-column justify-content-center align-items-center ">
-                                    <div class="blood-type text-center d-flex flex-column justify-content-center ">
-                                        <p class="vertical-center">{{user.blood_group }}</p>
-                                    </div>
-                                </div>
-                                <div class="col-8 ">
-                                    <h5 class="mt-1 card-title name">{{user.get_full_name}}
-                                        {% if user.gender == 'male' %}
-                                            <i class="ml-2 fas fa-male "></i>
-                                        {% elif user.gender == 'female' %}
-                                            <i class="ml-2 fas fa-female "></i>
-                                        {% endif %}
-                                    </h5>
-                                    <h6 class="card-subtitle mb-2 text-muted "><i class="fas fa-map-marker-alt mr-2 mt-1"></i><span class="mt-1">{{user.addres}}</span>
-                                    </h6>
-                                    <p class="mt-3 card-text info"><i class="fas fa-phone mr-2"></i><span>{{user.mobile}}</span><br><i class="far fa-envelope mr-2 mt-1"></i><span class="mt-1">{{user.email}}</span>
-                                    </p>
-                                    <p class="mt-3 card-text info"><i class="fas fa-calendar-alt mr-2 mt-1"></i><span>Last Donate: {{user.last_donation_date}}</p>
-                                </div>
-                                <div class="col-4"></div>
-                                <div class="col-8">
-                                    <button class="mt-3 slant-edge">
-                                        <p>Found Donor</p>
-                                    </button>
-                                </div>
+                {% for user in users %}
+                <div class="col-12 col-md-6 col-lg-4 my-3">
+                    <div class="request-card">
+                        <div class="request-card-header">
+                            <div class="blood-badge-large">{{ user.blood_group }}</div>
+                            {% if user.is_available %}
+                                <span class="badge badge-success px-3 py-2 font-weight-bold" style="border-radius: 50px; font-size: 0.85rem;">Available</span>
+                            {% else %}
+                                <span class="badge badge-secondary px-3 py-2 font-weight-bold" style="border-radius: 50px; font-size: 0.85rem;">Unavailable</span>
+                            {% endif %}
+                        </div>
+                        <div class="request-card-body">
+                            <h5 class="font-weight-bold text-charcoal mb-3">{{ user.get_full_name }}
+                                {% if user.gender == 'male' %}
+                                    <i class="ml-1 fas fa-male text-primary"></i>
+                                {% elif user.gender == 'female' %}
+                                    <i class="ml-1 fas fa-female text-danger"></i>
+                                {% endif %}
+                            </h5>
+                            <div class="info-row">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>{{ user.addres }}</span>
                             </div>
+                            <div class="info-row">
+                                <i class="fas fa-phone"></i>
+                                <span>{{ user.mobile }}</span>
+                            </div>
+                            <div class="info-row">
+                                <i class="far fa-envelope"></i>
+                                <span style="word-break: break-all;">{{ user.email }}</span>
+                            </div>
+                            <div class="info-row">
+                                <i class="fas fa-calendar-check"></i>
+                                <span>Last Donate: {% if user.last_donation_date %}{{ user.last_donation_date }}{% else %}Never{% endif %}</span>
+                            </div>
+                        </div>
+                        <div class="request-card-footer">
+                            <a href="tel:{{ user.mobile }}" class="btn btn-bleed btn-block text-center font-weight-bold" style="border-radius: 8px;">
+                                <i class="fas fa-phone mr-2"></i> Contact Donor
+                            </a>
                         </div>
                     </div>
                 </div>
-                {%endfor%}
-                
+                {% empty %}
+                <div class="col-12 text-center py-5">
+                    <p class="text-muted" style="font-size: 1.2rem;">No donors found matching your search criteria.</p>
+                </div>
+                {% endfor %}
             </div>
         </div>
     </section>

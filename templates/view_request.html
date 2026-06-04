@@ -46,6 +46,7 @@
                                 </p>
                             </div>
                             <div class="col-12 d-flex justify-content-around mt-3">
+                                {% if user.is_authenticated %}
                                 <form method="post" action="{% url 'create_donation' request.id %}">
                                     {% csrf_token %}
                                     <button type="submit" class="slant-edge btn btn-success">
@@ -58,6 +59,14 @@
                                         <p>Reject Request</p>
                                     </button>
                                 </form>
+                                {% else %}
+                                <button class="slant-edge btn btn-success" data-toggle="modal" data-target="#authRequiredModal">
+                                    <p>Accept Request</p>
+                                </button>
+                                <button class="slant-edge btn btn-danger" data-toggle="modal" data-target="#authRequiredModal">
+                                    <p>Reject Request</p>
+                                </button>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
